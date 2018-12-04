@@ -1,5 +1,4 @@
 # Seq2Seq English-French Machine Translation Model Based on TensorFlow Framework
-> Code reference https://github.com/NELSONZHAO/zhihu/tree/master/machine_translation_seq2seq?1526990148498
 
 The content of this article is mainly based on English-French Parallel Corpus to implement a simple English-French translation model. The code framework uses TensorFlow 1.12.0.
 
@@ -28,5 +27,9 @@ la france est jamais froid en septembre , et il est neigeux en janvier . <EOS>
 ```
 
 ## Code interpretation
+> Code reference https://github.com/NELSONZHAO/zhihu/tree/master/machine_translation_seq2seq?1526990148498
+
 [基于TensorFlow框架的Seq2Seq英法机器翻译模型](https://zhuanlan.zhihu.com/p/37148308)
+
 [tensorflow Seq2seq编码函数详解](https://www.jianshu.com/p/9925171f692f)
+
