@@ -1,5 +1,6 @@
 # Seq2Seq English-French Machine Translation Model Based on TensorFlow Framework
 > Code reference https://github.com/NELSONZHAO/zhihu/tree/master/machine_translation_seq2seq?1526990148498
+
 The content of this article is mainly based on English-French Parallel Corpus to implement a simple English-French translation model. The code framework uses TensorFlow 1.12.0.
 
 
