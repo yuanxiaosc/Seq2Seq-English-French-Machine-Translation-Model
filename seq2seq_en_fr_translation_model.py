@@ -1,18 +1,19 @@
 import tensorflow as tf
 import numpy as np
+import os
 import pickle
 
 # 加载数据
-prepared_data = np.load("preparing_resources/prepared_data.npz")
+prepared_data = np.load(os.path.join("preparing_resources","prepared_data.npz"))
 source_text_to_int = prepared_data['X']
 target_text_to_int = prepared_data['Y']
 print("\nDATA shape:")
 print("source_text_to_int_shape:\t", source_text_to_int.shape)
 print("target_text_to_int_shape:\t", target_text_to_int.shape)
 # 加载字典
-with open("preparing_resources/en_vocab_to_int.pickle", 'rb') as f:
+with open(os.path.join("preparing_resources","en_vocab_to_int.pickle"), 'rb') as f:
     source_vocab_to_int = pickle.load(f)
-with open("preparing_resources/fa_vocab_to_int.pickle", 'rb') as f:
+with open(os.path.join("preparing_resources","fa_vocab_to_int.pickle"), 'rb') as f:
     target_vocab_to_int = pickle.load(f)
 source_int_to_vocab = {idx: word for word, idx in source_vocab_to_int.items()}
 target_int_to_vocab = {idx: word for word, idx in target_vocab_to_int.items()}
@@ -308,7 +309,10 @@ with train_graph.as_default():
         clipped_gradients = [(tf.clip_by_value(grad, -1., 1.), var) for grad, var in gradients if grad is not None]
         train_op = optimizer.apply_gradients(clipped_gradients)
 
+
+
 with tf.Session(graph=train_graph) as sess:
+    writer = tf.summary.FileWriter(os.path.join("tmp","logs"), sess.graph)
     sess.run(tf.global_variables_initializer())
 
     for epoch_i in range(epochs):
@@ -334,7 +338,7 @@ with tf.Session(graph=train_graph) as sess:
                       .format(epoch_i, batch_i, len(source_text_to_int) // batch_size, loss))
     # Save Model
     saver = tf.train.Saver()
-    saver.save(sess, "tmp/checkpoints/model.ckpt")
-    print('Model Trained and Saved')
+    saver.save(sess, os.path.join("tmp","checkpoints","model.ckpt"))
+    print('Model Trained and Save to {}'.format(os.path.join("tmp","checkpoints","model.ckpt")))
 
 

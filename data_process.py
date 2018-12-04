@@ -1,6 +1,7 @@
 import numpy as np
 import pickle
 import tqdm
+import os
 
 max_source_sentence_length = 20
 max_target_sentence_length = 25
@@ -42,10 +43,10 @@ def text_to_int(sentence, map_dict, max_length=20, is_target=False):
         return text_to_idx
 
 # English source data
-with open("data/small_vocab_en", "r", encoding="utf-8") as f:
+with open(os.path.join("data","small_vocab_en"), "r", encoding="utf-8") as f:
     source_text = f.read()
 # French target data
-with open("data/small_vocab_fr", "r", encoding="utf-8") as f:
+with open(os.path.join("data","small_vocab_fr"), "r", encoding="utf-8") as f:
     target_text = f.read()
 
 view_sentence_range = (0, 10)
@@ -125,12 +126,18 @@ print("\nDATA shape:")
 print("X_shape:\t", X.shape)
 print("Y_shape:\t", Y.shape)
 
+# 创建存储数据的文件夹
+if not os.path.exists("preparing_resources"):
+    os.mkdir("preparing_resources")
+if not os.path.exists("tmp"):
+    os.makedirs(os.path.join("tmp","checkpoints"))
+
 # 存储预处理文件
-np.savez("preparing_resources/prepared_data.npz", X=X, Y=Y)
+np.savez(os.path.join("preparing_resources","prepared_data.npz"), X=X, Y=Y)
 # 存储字典
-with open("preparing_resources/en_vocab_to_int.pickle", 'wb') as f:
+with open(os.path.join("preparing_resources","en_vocab_to_int.pickle"), 'wb') as f:
     pickle.dump(source_vocab_to_int, f)
-with open("preparing_resources/fa_vocab_to_int.pickle", 'wb') as f:
+with open(os.path.join("preparing_resources","fa_vocab_to_int.pickle"), 'wb') as f:
     pickle.dump(target_vocab_to_int, f)
 print("The size of English Map is : {}".format(len(source_vocab_to_int)))
 print("The size of French Map is : {}".format(len(target_vocab_to_int)))

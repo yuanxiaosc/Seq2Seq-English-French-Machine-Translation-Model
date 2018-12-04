@@ -1,5 +1,6 @@
 import tensorflow as tf
 import pickle
+import os
 
 '''
 【Input】
@@ -18,9 +19,10 @@ la france est jamais froid en septembre , et il est neigeux en janvier . <EOS>
 batch_size = 256
 
 # 加载字典
-with open("preparing_resources/en_vocab_to_int.pickle", 'rb') as f:
+# 加载字典
+with open(os.path.join("preparing_resources","en_vocab_to_int.pickle"), 'rb') as f:
     source_vocab_to_int = pickle.load(f)
-with open("preparing_resources/fa_vocab_to_int.pickle", 'rb') as f:
+with open(os.path.join("preparing_resources","fa_vocab_to_int.pickle"), 'rb') as f:
     target_vocab_to_int = pickle.load(f)
 source_int_to_vocab = {idx: word for word, idx in source_vocab_to_int.items()}
 target_int_to_vocab = {idx: word for word, idx in target_vocab_to_int.items()}
@@ -43,9 +45,8 @@ translate_sentence = sentence_to_seq(translate_sentence_text, source_vocab_to_in
 loaded_graph = tf.Graph()
 with tf.Session(graph=loaded_graph) as sess:
     # Load saved model
-    loader = tf.train.import_meta_graph('tmp/checkpoints/model.ckpt.meta')
-    loader.restore(sess, tf.train.latest_checkpoint('tmp/checkpoints'))
-
+    loader = tf.train.import_meta_graph(os.path.join("tmp","checkpoints","model.ckpt.meta"))
+    loader.restore(sess, tf.train.latest_checkpoint(os.path.join("tmp","checkpoints")))
     input_data = loaded_graph.get_tensor_by_name('inputs:0')
     logits = loaded_graph.get_tensor_by_name('predictions:0')
     target_sequence_length = loaded_graph.get_tensor_by_name('target_sequence_len:0')
