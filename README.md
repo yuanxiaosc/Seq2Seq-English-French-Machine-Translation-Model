@@ -33,3 +33,4 @@ la france est jamais froid en septembre , et il est neigeux en janvier . <EOS>
 
 [tensorflow Seq2seq编码函数详解](https://www.jianshu.com/p/9925171f692f)
 
+[machine_translation_seq2seq.ipynb](https://nbviewer.jupyter.org/github/NELSONZHAO/zhihu/blob/master/machine_translation_seq2seq/machine_translation_seq2seq.ipynb)
